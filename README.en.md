@@ -1,6 +1,6 @@
 # deai-writing-skills
 
-Three Traditional Chinese writing skills for Claude Code and any AI that takes a system prompt: generate copy without the AI smell, check existing text for it, and distill someone's voice to write in.
+Three Traditional Chinese writing skills for any AI that takes a system prompt, Claude Code included: generate copy without the AI smell, check existing text for it, and distill someone's voice to write in.
 
 **English** | [繁體中文](README.md)
 
@@ -8,7 +8,9 @@ Three Traditional Chinese writing skills for Claude Code and any AI that takes a
 
 ## What this is
 
-A monorepo of three self-contained skills. Each folder holds one `SKILL.md` (the only entry point), an `agents/openai.yaml`, and a `references/` folder of detail tables. Drop the folders into your skills directory and they become `/deai-guard`, `/deai-voice`, and `/deai-write`.
+Three self-contained skills for three writing jobs in Chinese: generate from scratch, check existing text, and distill a person's voice. Each skill is a single `SKILL.md` (plain text) plus a `references/` folder of detail tables.
+
+No platform lock-in. Every `SKILL.md` carries a paste-ready operating prompt, so it runs in any AI that takes a system prompt. If you use Claude Code, you can drop the folders into a skills directory and they auto-load as slash commands, but that is just one option, not a requirement.
 
 This README was written with `deai-write`. If the tool works, its own front page should not read like a machine wrote it.
 
@@ -32,43 +34,19 @@ Every skill holds the same four lines.
 
 4. **Protected spans stay put.** Numbers, terminology, quotes, commands, and proper nouns are never touched during a rewrite. Rewriting means saying it differently, not changing what it says.
 
-## Install
+## How to use it
 
-The skills are folders. Copy them where Claude Code looks for skills, then restart the session so they load as slash commands.
+Paste it into any AI. Open any `SKILL.md`, copy the operating prompt inside it, and paste that into ChatGPT, Claude, Gemini, or whatever chat AI you use. It follows the same steps. No install, no platform lock-in.
 
-Global (all sessions):
+Claude Code makes it smoother. Drop the three folders into a skills directory (global `~/.claude/skills/`, or a project's `.claude/skills/`), restart, and they become `/deai-guard`, `/deai-voice`, and `/deai-write`, triggered automatically by their keywords.
 
-- macOS / Linux: `~/.claude/skills/`
-- Windows: `%USERPROFILE%\.claude\skills\`
+To get the files, clone this repo:
 
-Per project (only that project):
-
-- `<project>/.claude/skills/`
-
-### From git
-
-```bash
+```
 git clone https://github.com/donbeeshyvt-jpg/deai-writing-skills.git
-cd deai-writing-skills
-
-# macOS / Linux
-mkdir -p ~/.claude/skills
-cp -r deai-guard deai-voice deai-write ~/.claude/skills/
 ```
 
-```powershell
-# Windows PowerShell — 先進到 clone 出來的資料夾
-cd deai-writing-skills
-
-# 目的地目錄不存在時 Copy-Item 不會自動建，先建好
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
-
-Copy-Item -Path deai-guard,deai-voice,deai-write -Destination "$env:USERPROFILE\.claude\skills" -Recurse
-```
-
-Restart the Claude Code session. The commands `/deai-guard`, `/deai-voice`, and `/deai-write` appear once the skills load.
-
-No build step, no dependencies. Each `SKILL.md` also carries a paste-ready operating prompt, so you can run any of the three by pasting it into an AI that has no skill system at all.
+No build step, no dependencies.
 
 ## Minimal usage
 

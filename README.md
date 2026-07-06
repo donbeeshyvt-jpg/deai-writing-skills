@@ -8,7 +8,9 @@
 
 ## 這是什麼
 
-一個 monorepo，裝三個自包含的技能。每個資料夾裡一個 `SKILL.md`（唯一入口）、一個 `agents/openai.yaml`、一個放細節表的 `references/`。把資料夾複製到技能目錄，它們就變成 `/deai-guard`、`/deai-voice`、`/deai-write` 三個斜線指令。
+三個自包含的技能，處理中文寫作的三件事：從零生成、檢查既有文字、提煉某人的口吻。每個技能就是一份 `SKILL.md`（純文字），配一個放細節表的 `references/`。
+
+不綁任何平台。每份 `SKILL.md` 裡都有一段可整段貼的操作 prompt，貼進任何吃 system prompt 的 AI 就能用，什麼平台都能裝。用 Claude Code 的話可以把資料夾放進技能目錄自動變成斜線指令，但那只是其中一種用法，不是必要條件。
 
 這份 README 是用 `deai-write` 寫的。如果工具有效，它自己的門面就不該讀起來像機器寫的。
 
@@ -32,43 +34,19 @@
 
 4. **保護片段不動。** 改寫時不碰數字、術語、引用、命令、專有名詞。改寫是換句話說，不是換內容。
 
-## 安裝
+## 怎麼用
 
-技能就是資料夾。複製到 Claude Code 找技能的地方，重啟 session，它們就載入為斜線指令。
+貼進任何 AI 就能用。打開任一份 `SKILL.md`，把裡面那段操作 prompt 整段複製，貼進 ChatGPT、Claude、Gemini 或你在用的對話式 AI，它就照同一套步驟走。不用安裝、不綁平台。
 
-全域（所有 session 可用）：
+用 Claude Code 的話更順手。把三個資料夾放進技能目錄（全域 `~/.claude/skills/`，或某個專案的 `.claude/skills/`），重啟後就自動變成 `/deai-guard`、`/deai-voice`、`/deai-write`，講到觸發詞就會自己啟動。
 
-- macOS / Linux：`~/.claude/skills/`
-- Windows：`%USERPROFILE%\.claude\skills\`
+要拿檔案，clone 這個 repo：
 
-專案（只在該專案）：
-
-- `<專案>/.claude/skills/`
-
-### 從 git 安裝
-
-```bash
+```
 git clone https://github.com/donbeeshyvt-jpg/deai-writing-skills.git
-cd deai-writing-skills
-
-# macOS / Linux
-mkdir -p ~/.claude/skills
-cp -r deai-guard deai-voice deai-write ~/.claude/skills/
 ```
 
-```powershell
-# Windows PowerShell — 先進到 clone 出來的資料夾
-cd deai-writing-skills
-
-# 目的地目錄不存在時 Copy-Item 不會自動建，先建好
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
-
-Copy-Item -Path deai-guard,deai-voice,deai-write -Destination "$env:USERPROFILE\.claude\skills" -Recurse
-```
-
-複製完重啟 Claude Code session。技能載入後，`/deai-guard`、`/deai-voice`、`/deai-write` 就會出現。
-
-沒有建置步驟，沒有依賴。每個 `SKILL.md` 裡都附一段可直接貼的操作 prompt，所以就算對方是沒有技能系統的 AI，把那段貼進去也能跑。
+沒有建置步驟，沒有依賴。
 
 ## 最小用法
 

@@ -1,7 +1,5 @@
 # deai-writing-skills
 
-<!-- Repo URL 尚未建立。所有連結先用佔位符 https://github.com/USERNAME/deai-writing-skills，push 後改成你的 repo URL。 -->
-
 Three Traditional Chinese writing skills for Claude Code and any AI that takes a system prompt: generate copy without the AI smell, check existing text for it, and distill someone's voice to write in.
 
 用繁體中文寫得不像 AI 的三個技能。一個從零生成、一個檢查既有文字、一個把某人的口吻蒸餾成可重用的設定。三個都能裝進 Claude Code 當斜線指令，也能貼進任何吃 system prompt 的 AI。
@@ -54,8 +52,7 @@ Per project (only that project):
 ### From git
 
 ```bash
-git clone https://github.com/USERNAME/deai-writing-skills
-# push 後把上面的 USERNAME 換成你的 repo
+git clone https://github.com/donbeeshyvt-jpg/deai-writing-skills.git
 cd deai-writing-skills
 
 # macOS / Linux
@@ -189,8 +186,7 @@ MIT. See `LICENSE`.
 ### 從 git 安裝
 
 ```bash
-git clone https://github.com/USERNAME/deai-writing-skills
-# push 後把上面的 USERNAME 換成你的 repo
+git clone https://github.com/donbeeshyvt-jpg/deai-writing-skills.git
 cd deai-writing-skills
 
 # macOS / Linux

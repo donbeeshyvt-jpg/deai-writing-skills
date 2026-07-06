@@ -1,0 +1,4 @@
+interface:
+  display_name: "多方位提煉說話方式"
+  short_description: "把某人的說話方式蒸餾成可重用 voice profile 與可貼短 prompt"
+  default_prompt: "Use $deai-voice to distill this person's voice from the samples into a reusable profile."

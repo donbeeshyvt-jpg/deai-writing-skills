@@ -1,0 +1,4 @@
+interface:
+  display_name: "生成時去 AI 味"
+  short_description: "從主題與素材直接生成沒有 AI 味、又有基礎寫作功力的成稿"
+  default_prompt: "Use $deai-write to draft this from scratch so it reads human, preserving facts and marking gaps."

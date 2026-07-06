@@ -1,0 +1,4 @@
+interface:
+  display_name: "去 AI 味：檢查後確認再改"
+  short_description: "先嚴格檢查出報告，停下來問你要改哪些，確認後才移除"
+  default_prompt: "Use $deai-guard to audit this text, then ask me which hits to fix before rewriting."

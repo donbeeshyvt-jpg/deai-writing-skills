@@ -1,12 +1,12 @@
 ---
 name: deai-voice
 description: >-
-  Distill how a specific person speaks or writes into a reusable voice profile (language habits plus reasoning logic plus tone boundaries), then output a short prompt you can paste into any AI. Does multi-angle, deep sample analysis: user-provided samples first, and under an explicit authorization gate it may also web-search a named public figure's public content to gather more samples. Use when asked to 提煉語氣, 蒸餾說話方式, 模仿某人文風, 抓某人的寫作習慣, 做 voice profile, 人格蒸餾, 學某某人怎麼寫, distill voice, clone writing style, mimic tone, extract someone's style, voice DNA, ghostwrite as X. Does not fabricate the target's views, biography, or politics; uses only authorized or public samples; a trait must repeat across samples to count.
+  Distill how a specific person speaks or writes into a reusable voice profile (language habits plus reasoning logic plus tone boundaries), then output a portable voice pack (the full reverse-analysis data plus a detailed, ready-to-paste generation prompt with built-in de-AI-taste) usable to write in that voice or reuse as a character card. Does multi-angle, deep sample analysis: user-provided samples first, and under an explicit authorization gate it may also web-search a named public figure's public content to gather more samples. Use when asked to 提煉語氣, 蒸餾說話方式, 模仿某人文風, 抓某人的寫作習慣, 做 voice profile, 人格蒸餾, 學某某人怎麼寫, distill voice, clone writing style, mimic tone, extract someone's style, voice DNA, ghostwrite as X. Does not fabricate the target's views, biography, or politics; uses only authorized or public samples; a trait must repeat across samples to count.
 ---
 
 # 多方位深度提煉說話方式
 
-把一個人的說話與寫作方式，蒸餾成一份結構化、可重用的 voice profile。產出兩層東西：一份完整 profile（給人讀、給人審），加一段壓縮過的短 prompt（可直接貼給其他 AI，讓它照這個人的口吻寫）。
+把一個人的說話與寫作方式，蒸餾成一份結構化、可重用的東西。頭號產物是一個「口吻資料包」：把整篇反向分析後的資料、一段詳細的生成 prompt、和內建的去 AI 味守則打包成單一區塊，可直接貼給任何 AI 照這個人的口吻寫，或當可重用的角色卡交棒。人讀用的完整 profile 保留為審閱來源。
 
 這不是「猜一個人是誰」，是「描述這個人怎麼組織語言、怎麼推理、語氣停在哪裡」。描述的每一條都要能指回具體樣本，指不回去的就不寫。
 
@@ -22,7 +22,7 @@ description: >-
 
 2. 跨樣本重複才算核心。單一樣本出現一次的習慣可能是當天狀態，不是穩定特徵。同一個模式要在 3 份以上獨立樣本裡重複，才能列進 profile 的核心層。只出現 1 到 2 次的放「觀察到但不確定」區。
 
-3. 表層好抓，深層才是重點。詞彙和標點誰都數得出來，AI 靠這些模仿只會像皮不像骨。真正讓一個人是這個人的，是他先講結論還是先鋪背景、遇到不確定怎麼說、對讀者是拉近還是保持距離、笑點落在哪裡。這層要花力氣。
+3. 深層是重點，但表層裡有高價值訊號別低估。詞彙和標點誰都數得出來，AI 只靠這些模仿容易像皮不像骨。真正讓一個人是這個人的，是他先講結論還是先鋪背景、遇到不確定怎麼說、對讀者是拉近還是保持距離、笑點落在哪裡，這層要花力氣。但表層不是都一樣廉價：虛詞與功能詞、標點、句長節奏是最穩定、最抗改寫、最不受主題影響的一類指紋，要獨立抽、優先抽。抽它們是替深層鋪路，不是取代深層。
 
 4. 只用授權或公開內容。使用者自己提供的樣本，預設可用。要主動上網補樣本，必須先過授權閘門（第 1 關）。查不到就標 `[樣本不足]`，不要為了湊滿 profile 去編。
 
@@ -40,7 +40,7 @@ description: >-
 - 要拿 profile 做什麼？（自己寫東西時對照、餵給 AI 代寫、團隊統一文風、單純研究）
 - 樣本從哪來？使用者會貼，還是要我上網找？
 
-用途會影響深度。餵給 AI 代寫要完整 profile 加短 prompt；單純研究可以只出 profile。
+用途會影響深度。餵給 AI 代寫要完整資料包（含詳細生成 prompt）；單純研究可以只出人讀 profile。
 
 ### 第 1 關：授權與倫理閘門
 
@@ -71,10 +71,11 @@ description: >-
 
 目標湊到 5 份以上獨立樣本，每份最好 300 字以上。長度不夠、數量不夠就照實說，profile 的信心等級會整體下降。
 
-每份樣本標三件事：
+每份樣本標四件事：
 
 - 來源（使用者提供 / 某網址 / 某本書）
 - 類型（長文 / 貼文 / 訪談口語 / 郵件 / 技術文件）
+- 時間（發表或書寫的大概時間。樣本跨多年時，時間漂移要處理，見第 4 關）
 - 是否經 AI 改寫或代筆
 
 AI 改寫過的樣本降權：這類樣本本身就帶 AI 味，拿來當「這個人的自然口吻」會污染 profile。標記後只當輔助，不當核心依據。判斷不了是否 AI 改過，就問使用者。判斷「是否被 AI 改過」本身也是一種偵測，會誤判，所以用它降權、不用它下定論；訊號可參考 `deai-guard` 的 AI 味清單。
@@ -83,33 +84,41 @@ AI 改寫過的樣本降權：這類樣本本身就帶 AI 味，拿來當「這�
 
 同一個人在不同場景講話不一樣（寫論文相對於發限動）。樣本類型混雜時，profile 要分場景寫，別把技術文件的嚴謹算進他日常的隨性。
 
+樣本來源是語音（訪談、播客、語音訊息、直播）時，先套 `references/spoken-samples.md` 的逐字處理，別在抽取前把逐字稿清成通順文字，否則停頓、改口、未完成句這些最認人的訊號會流失。
+
+選用步驟：對象是使用者本人或授權代理時，可在抽取前做一次引導式偏好訪談，補問樣本問不出的隱性偏好（刻意迴避哪些寫法、場景怎麼切換）。訪談答案標「本人自陳」，補強信心但不自動當 high。具名公眾人物不得代答訪談，界線見 `references/authorization-ethics.md` §七。
+
 ### 第 3 關：多維抽取
 
-分兩層抽。表層先掃，深層細讀。每個維度都記下「證據句」和「出現次數／樣本數」。逐維操作說明與中文實例對照在 `references/extraction-dimensions.md`。
+分兩層抽。表層先掃，深層細讀。每個維度都記下「證據句」和「出現次數／樣本數」。逐維操作說明與中文實例對照在 `references/extraction-dimensions.md`，口語樣本的逐字處理與口語專有維度另見 `references/spoken-samples.md`。
 
 表層維度（可量化，直接數）：
 
 | 維度 | 抽什麼 |
 |---|---|
-| 詞彙 | 高頻實詞、口頭禪、慣用開頭詞、術語密度、俚語比例、第一人稱頻率、有沒有慣用的自嘲詞 |
+| 詞彙 | 高頻實詞（需過主題過濾）、虛詞與功能詞（優先指紋）、口頭禪與慣用過場句、成語密度、術語密度、第一人稱頻率、自嘲詞 |
 | 標點 | 愛用哪些標點、驚嘆號問號密度、有沒有慣用省略號、括號補充的頻率、（繁中場景）全形習慣 |
 | 句長 | 平均句長、句長變化幅度、有沒有慣用的極短句作節奏 |
 | 段落 | 平均段長、段落是否等長、換行習慣、有沒有單句成段 |
 | 開場 | 文章或段落怎麼起頭：直接破題、拋問句、講場景、還是先給結論 |
 | 收尾 | 怎麼收：回扣開頭、停在事實、拋開放問題、還是慣性升華（若有升華，照實記，不美化） |
+| 社群與夾雜 | emoji 與顏文字、標點連用、空格斷行、中英夾雜與數字寫法（有社群或即時通訊樣本時抽） |
 
 深層維度（要細讀，重點在這）：
 
 | 維度 | 抽什麼 | 怎麼記 |
 |---|---|---|
 | 推理順序 | 先結論後理由，還是先鋪陳後結論？歸納還是演繹傾向 | 引 2 到 3 段展示他的推理骨架 |
+| 連接鏈 | 慣用把哪些小詞串成固定接法（其實…但…、先…再…最後…） | 記 2 到 3 個固定框架，這層抗改寫 |
+| 謀篇結構 | 整段整篇怎麼鋪展、段落功能序列、承轉怎麼接 | 引 1 到 2 篇標出段落功能序列，長文最露餡 |
 | 取捨方式 | 面對複雜問題怎麼取捨、怎麼標重點、什麼會被他省略 | 記他「略過什麼」和「放大什麼」 |
 | 承認不確定 | 用什麼句式承認自己不知道、會不會 hedge、hedge 的密度 | 記原句，如「我不確定」「應該吧」「還沒搞懂」 |
 | 對讀者距離 | 拉近（你我對話）還是保持距離（旁觀陳述）？教學還是平視 | 記人稱用法與招呼方式 |
 | 情緒邊界 | 情緒表達的上限與下限，會不會激動，激動時怎麼寫 | 記情緒峰值的句子 |
 | 幽默邊界 | 有沒有幽默、哪種（自嘲／冷面／誇張／諧音）、笑點落在哪 | 引一個代表性笑點，拆解它為什麼好笑 |
 | 類比傾向 | 慣用哪個領域的比喻（工程、運動、料理、生活） | 列 2 到 3 個實際類比 |
-| 世界觀傾向 | 只記「在樣本裡反覆出現的看事情角度」，不上升為人格定性 | 用「在這些樣本中傾向……」句式，禁止「他是個……的人」 |
+| 佐證習慣 | 論證靠什麼撐（親身經歷、數據、引用權威、假設、類比） | 記最常倚重的佐證型態，與類比傾向區隔 |
+| 世界觀傾向 | 只記「在樣本裡反覆出現的看事情角度」，不上升為人格定性 | 用「在這些樣本中傾向……」句式，禁止「他是個……的人」；只供理解，不進短 prompt 與生成層 |
 
 深層維度最容易越界。守住一條線：描述他怎麼說，不替他總結他是誰。「在樣本裡他常先認錯再解釋」可以，「他是個謙虛的人」不行。
 
@@ -125,19 +134,31 @@ AI 改寫過的樣本降權：這類樣本本身就帶 AI 味，拿來當「這�
 
 樣本總數少於 3 份時，整份 profile 最高只能標到 medium，並在開頭寫明「樣本量不足，此 profile 為初步觀察」。
 
-### 第 5 關：輸出 profile 加短 prompt
+樣本時間跨度大時，標出來並以近期樣本為主，或分期記，別把對象早就淘汰的舊習慣當現在的穩定特徵（時間漂移，細則見 `references/confidence-and-stability.md` §七）。
 
-按下面的模板輸出。範例庫在 `references/output-templates.md`。
+樣本 5 份以上時，抽 profile 前先留 2 到 3 成樣本不看，建完再拿留樣檢查 high 特徵，只在建檔那批成立、留樣裡消失的特徵要降級（留樣驗證，防過擬合，細則見 `references/confidence-and-stability.md` §五）。樣本不足以留樣就誠實跳過並註明。
 
-### 第 6 關：測試改寫驗證
+### 第 5 關：輸出口吻資料包
+
+頭號出口是一個自足、可攜、可直接貼給任何 AI 的「口吻資料包」，格式與完整骨架見 `references/voice-pack-format.md`。它是單一 Markdown 區塊，三層一包：
+
+- 反向分析層：整篇反向分析後的結構化資料，每條掛信心與樣本編號，隨輸入伸縮。
+- 詳細生成 prompt 層（主出口）：高保真、可整段貼，內建對齊 `deai-write` 的去 AI 味守則與反漫畫化頻率上限。
+- 角色卡模式：同源換個排版，方便當可重用的口吻角色卡交棒。
+
+人讀用的完整 profile 不廢除，退為資料包反向分析層的審閱來源。profile 模板、短 prompt 多場景變體、評分表都在 `references/output-templates.md`。先把 profile 審過、短 prompt 調到位，再打包成資料包。
+
+### 第 6 關：測試改寫與驗證
 
 profile 不能只是好看，要能用。做一次驗證：
 
+0. 個體化前置：先寫一段完全不套 profile 的中性版（同主題、預設口吻）。跟套 profile 的版本並排，兩版差不多代表抓到的多是通用語氣，退回重抽（細則見 `references/confidence-and-stability.md` §六）。
 1. 挑一個對象沒寫過的主題（不能是樣本原題，會分不出是模仿還是抄）。
-2. 只拿短 prompt，照它寫一段 150 到 250 字。
-3. 把這段跟真實樣本並排，逐條對照 profile 的核心特徵有沒有中。
-4. 對不上的地方，回頭修 profile 或短 prompt，再測一次。
-5. 把這段測試改寫附在 profile 後面，讓使用者自己判斷像不像。
+2. 拿生成 prompt，照它寫一段 150 到 250 字。
+3. 把這段跟真實樣本並排，逐條對照核心特徵有沒有中；同時查三件事：有沒有把某特徵放大到失真（反漫畫化，匹配樣本頻率而非最大化）、換題後有沒有抄原內容（內容外洩）、本身讀不讀得通（內容連貫度）。評分表在 `references/output-templates.md` §四。
+4. 貼合度與內容連貫度雙軸，任一軸太低就回頭修 profile 或生成 prompt，再測一次。
+5. 樣本 5 份以上時做留樣與盲測（判官要不知道答案，客觀工具優先，細則見 `references/confidence-and-stability.md` §五）。
+6. 把這段測試改寫附在 profile 後面，讓使用者自己判斷像不像。
 
 驗證同時也是誠實檢查：如果照 profile 寫出來一點都不像，代表 profile 抓錯了或樣本不夠，照實講，別硬說像。
 
@@ -185,7 +206,7 @@ profile 不能只是好看，要能用。做一次驗證：
 
 ## 可直接貼給其他 AI 的短 prompt（模板）
 
-短 prompt 是 profile 的壓縮版，只留 high 信心的核心特徵，控制在能一眼讀完的長度。
+短 prompt 是 profile 的壓縮版，只留 high 信心的核心特徵，控制在能一眼讀完的長度。資料包 §2 的生成 prompt 是它的詳細版（帶完整規則、原文錨點、頻率上限、去 AI 味守則），這裡的短 prompt 是壓縮審閱版，打包格式見 `references/voice-pack-format.md`。
 
     你現在要模仿 [代號] 的說話方式寫作。規則如下：
 
@@ -206,6 +227,8 @@ profile 不能只是好看，要能用。做一次驗證：
     邊界：
     - 不要虛構 [代號] 的觀點、經歷、立場。沒有依據的判斷就別寫。
     - 不確定的地方照 [代號] 的習慣承認，別硬裝懂。
+    - 換新主題時不得替 [代號] 斷言他沒表過的事實或立場（非覆蓋聲明）。
+    - 世界觀傾向只供理解，不寫進這段生成指令。用仿寫對外時標「AI 仿寫、非本人」。
 
 ## 可直接貼的逐步操作 prompt
 
@@ -220,14 +243,14 @@ profile 不能只是好看，要能用。做一次驗證：
 　如果你沒有搜尋能力，就只用我貼的樣本，並在 profile 註明沒做公開補樣、信心下調。
 第 2 步：收樣本，目標 5 份以上、每份 300 字以上。每份標來源、類型、是否被 AI 改過（被改過的降權）。
 　也請我提供「不像他、別學」的壞樣本對照。
-第 3 步：分兩層抽。表層數詞彙、標點、句長、段落、開場、收尾；
-　深層細讀推理順序、取捨、承認不確定、對讀者距離、情緒與幽默、常用類比、世界觀傾向。
+第 3 步：分兩層抽。表層數詞彙（含虛詞與功能詞這類優先指紋）、標點、句長、段落、開場、收尾；
+　深層細讀推理順序、連接鏈、謀篇結構、取捨、承認不確定、對讀者距離、情緒與幽默、佐證習慣、常用類比、世界觀傾向。
 　每條都要附證據句和出現的樣本數。只描述他怎麼說，不替他定性（可寫「常先認錯再解釋」，不可寫「他很謙虛」）。
 　錯字口誤不算特徵，除非我說那就是他的味道。
 第 4 步：跨 3 份以上樣本重複的才進核心（high）；2 份的標 medium；只 1 份或疑似 AI 改過的放存疑區（low）。
 　樣本少於 3 份，整份最高只能 medium，並在開頭聲明樣本不足。
-第 5 步：輸出完整 profile 加一段可貼給 AI 的短 prompt（短 prompt 只留 high 特徵）。
-第 6 步：挑一個他沒寫過的主題，照短 prompt 寫 150 到 250 字，跟真實樣本並排對照，不像就回去修。
+第 5 步：輸出一個「口吻資料包」（單一 Markdown 區塊，三層：反向分析資料、詳細生成 prompt、角色卡模式），生成 prompt 內建去 AI 味守則與頻率上限、附原文錨點與非覆蓋聲明。生成 prompt 只放語言表層與推理語氣特徵；世界觀傾向留在反向分析層供理解，不寫進生成 prompt。完整 profile 當審閱來源保留。
+第 6 步：先寫一段不套 profile 的中性版對照（個體化）；再挑一個他沒寫過的主題，照生成 prompt 寫 150 到 250 字，跟真實樣本並排逐條對照，同時查有沒有把特徵放大失真、換題後有沒有抄原內容、讀不讀得通。不像或超標就回去修。
 
 規範：繁體中文、全形標點、禁破折號。不虛構對象的觀點、經歷、立場。抓不到就標樣本不足，不要用印象填補。
 ```
@@ -242,11 +265,15 @@ profile 不能只是好看，要能用。做一次驗證：
 - 不把 AI 改寫過的樣本當核心依據，一定降權並標記。
 - 沒有搜尋能力時不用記憶裡的印象填補樣本，改成只用提供樣本並下調信心。
 - profile 和短 prompt 本身的中文也守去 AI 味規範：全形標點、禁破折號「——」、不用「不僅…更…」「值得注意的是」「總而言之」「讓我們深入探討」，用功能性描述而非抽象人設詞。
+- 不把世界觀傾向寫進短 prompt 或資料包生成層。它只給人理解對象，壓進生成會把「像他」變成「替他表態」。
+- 用仿寫聲音對外產出時，預設標「AI 仿寫、非本人」（可由使用者關閉）。
+- 把原文錨點放進要外送的資料包前，確認授權涵蓋此用途（原文外送，見 `references/authorization-ethics.md` §七）。
+- 口語與隨性語體天生較難重現，貼真度上限較低，對口語對象要更多樣本、對「像不像」更保守。
 - 不宣稱 profile 100% 準確。它是樣本的歸納，樣本換了結論可能就變。
 
 ## 與其他技能搭配
 
-- 跟 `deai-write` 搭：先用本技能抽出某人的 voice profile，把短 prompt 填進 `deai-write` §0 的「風格輸入」欄，讓它生出來的東西既沒有 AI 味、又帶指定的人的口吻。
+- 跟 `deai-write` 搭：先用本技能抽出 voice profile，把短 prompt（或資料包 §2 的生成 prompt）填進 `deai-write` §0 的「風格輸入」欄，讓它生出來的東西既沒有 AI 味、又帶指定的人的口吻。資料包的生成 prompt 已內建對齊 `deai-write` 的去 AI 味守則。
 - 跟 `deai-guard` 搭：改寫時如果附上本技能的 profile，可以把「改得更自然」對齊到「改得更像這個人」，而不是改成通用的自然文風。
 - 專案另有既有前身技能 `voice-style-distill`（單一來源、無授權搜尋、無逐步 prompt）。本技能是它的深化版；差異見資料夾內 `NEW_SKILLS_COMPARISON.md`。
 
@@ -254,7 +281,9 @@ profile 不能只是好看，要能用。做一次驗證：
 
 | 檔案 | 放什麼 |
 |---|---|
-| `references/extraction-dimensions.md` | 表層六維、深層八維的逐維操作說明與中文實例、越界紅線 |
-| `references/authorization-ethics.md` | 授權放行表完整版、web 搜尋邊界、冒名自查、拒絕話術 |
-| `references/confidence-and-stability.md` | 信心分級判定、樣本量降級表、AI 改寫降權、中文量化校準 |
-| `references/output-templates.md` | 完整 profile 模板、多場景短 prompt 變體、範例與對照評分表 |
+| `references/voice-pack-format.md` | 口吻資料包格式：三層結構、內建去 AI 味守則、角色卡模式、兩種用法、品質閘門 |
+| `references/extraction-dimensions.md` | 表層維度（含虛詞指紋、過場句、成語、emoji、中英夾雜）、深層維度（含連接鏈、謀篇結構、佐證習慣）的逐維操作、越界紅線 |
+| `references/spoken-samples.md` | 口語樣本逐字處理、填充詞與自我修正、句末語氣詞功能對照、話輪互動 |
+| `references/authorization-ethics.md` | 授權放行表、web 搜尋邊界、how／what 總綱與冒名自查、授權範圍與撤回、拒絕話術 |
+| `references/confidence-and-stability.md` | 信心分級、樣本量降級、AI 改寫降權、中文量化校準、留樣驗證、個體化判定、時間漂移 |
+| `references/output-templates.md` | 完整 profile 模板、短 prompt 變體與四塊補充、評分表與反漫畫化雙軸、刻度卡與模板庫 |

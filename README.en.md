@@ -20,7 +20,7 @@ This README was written with `deai-write`. If the tool works, its own front page
 |---|---|---|
 | `deai-write` | Generates a finished Traditional Chinese draft from a topic plus source material. Blog posts, social copy, docs, emails, landing pages, or scripts. The banned patterns never get written in the first place. | You have a topic and material and want new copy that reads human from draft one. |
 | `deai-guard` | Audits existing Traditional Chinese text for the AI smell. Produces an evidence report (risk score, five dimensions, per-hit findings), then stops and asks which hits to fix before touching a word. | You have text already written and want it checked, or checked and then rewritten. |
-| `deai-voice` | Distills how one person speaks or writes into a reusable voice profile, plus a short prompt you can paste into any AI. | You want generated text to sound like a specific person, not generic-natural. |
+| `deai-voice` | Reverse-analyzes how one person speaks or writes and packs it into a portable voice pack: the full analysis data, a detailed generation prompt, and a built-in de-AI-taste guard, ready to paste into any AI to write in that voice or hand off as a character card. | You want generated text to sound like a specific person, not generic-natural. |
 
 ## Four shared ground rules
 
@@ -60,7 +60,7 @@ Type 檢查 AI 味, 去 AI 味, or "check if this reads like AI" and it starts. 
 
 ### deai-voice
 
-Say 提煉語氣, 蒸餾說話方式, or "distill this person's voice" to run it. It runs an authorization gate first: only your own writing, content you are authorized to act for, or a named public figure's public material. A trait has to repeat across three or more samples to reach the core layer, and every trait carries a confidence level. You get a full profile (six surface dimensions plus eight deep ones) and a short prompt you can paste anywhere.
+Say 提煉語氣, 蒸餾說話方式, or "distill this person's voice" to run it. It runs an authorization gate first: only your own writing, content you are authorized to act for, or a named public figure's public material. A trait has to repeat across three or more samples to reach the core layer, and every trait carries a confidence level. You get a portable voice pack: the full reverse-analysis data, a detailed generation prompt (with a built-in de-AI-taste guard and anti-caricature frequency caps), and a character-card view, all in one block you can paste into any AI. The human-readable profile is kept as the review source.
 
 ## How they chain
 

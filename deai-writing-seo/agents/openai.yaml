@@ -1,0 +1,4 @@
+interface:
+  display_name: "意圖優先的 SEO 寫作與改寫"
+  short_description: "解析原稿或主題的真實意圖，寫成或改成流暢融入 SEO、無 AI 味的成稿"
+  default_prompt: "Use $deai-writing-seo to parse the intent and produce an SEO-integrated, human-sounding article."

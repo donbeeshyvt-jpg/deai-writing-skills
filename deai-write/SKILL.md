@@ -1,7 +1,7 @@
 ---
 name: deai-write
 description: >-
-  Generate Traditional Chinese blog posts, social copy, docs, emails, landing pages, and scripts that read human from the first draft, with built-in writing craft (structure, readability, concrete detail, rhythm, hooks) and generation-time anti-slop defense. This writes clean output from scratch; it does not rewrite existing text. Use when asked to 生成文章, 寫貼文, 寫文案, 從主題和素材寫成稿, 直接寫出沒有 AI 味的內容, write human-sounding copy, draft an article without AI taste, anti-slop generation. To check existing text use deai-guard; to distill someone's voice first use deai-voice.
+  Generate Traditional Chinese blog posts, social copy, docs, emails, landing pages, and scripts that read human from the first draft, with built-in writing craft (structure, readability, concrete detail, rhythm, hooks) and generation-time anti-slop defense. This writes clean output from scratch; it does not rewrite existing text. Use when asked to 生成文章, 寫貼文, 寫文案, 從主題和素材寫成稿, 直接寫出沒有 AI 味的內容, write human-sounding copy, draft an article without AI taste, anti-slop generation. To check existing text use deai-guard; to distill someone's voice first use deai-voice; when the piece has to rank in search, or an existing draft needs SEO, use deai-writing-seo.
 ---
 
 # 從零生成沒有 AI 味的內容
@@ -159,6 +159,7 @@ description: >-
 - 搜尋意圖三型：資訊型（為什麼 / 如何 / 是什麼）寫解答文；商業調查型（推薦 / 比較 / TOP）寫比較文；交易型（品牌名 / 購買）寫導購。
 - 一頁一意圖，所有 H2 繞同一個核心 query。
 - 長尾優先。主詞排不動先攻 3 詞以上長尾。
+- 要做到意圖確認、既有稿 SEO 化、社群與電子報平台適配，改用 `deai-writing-seo`。
 
 ### 3.7 E-E-A-T 與揭露缺點
 
@@ -311,7 +312,7 @@ docs 場景要把場景那句換成 docs，並加一句：「術語不要改，�
 
 ## 9. 禁止事項
 
-- 不做事後改寫。這是生成技能，改寫既有文章請用 `deai-guard`。
+- 不做事後改寫。這是生成技能：既有文章要去 AI 味用 `deai-guard`，要 SEO 化用 `deai-writing-seo`。
 - 不編造事實、數字、作者第一手經驗。缺口標 `[待補]` / `[待查]`。
 - 不硬塞幽默。docs、公文、嚴肅主題不用。
 - 不破壞語域。給誰讀就用誰的語域，不把技術文寫成小紅書。
@@ -328,11 +329,10 @@ docs 場景要把場景那句換成 docs，並加一句：「術語不要改，�
 |---|---|---|
 | `deai-write`（本檔） | 從零生成沒有 AI 味的成稿 | 有主題加素材，要寫新內容 |
 | `deai-guard` | 檢查既有文字，出證據化報告，問過使用者才改 | 生成後想要獨立複審，或救別人寫的 AI 味舊稿 |
-| `deai-voice` | 提煉某人語氣成 voice profile 與短 prompt | 要讓生成貼合特定人的口吻，產物填進本技能 §0 的「風格輸入」欄 |
+| `deai-voice` | 提煉某人口吻成三檔角色卡（說話格式可直接貼） | 要讓生成貼合特定人的口吻，產物填進本技能 §0 的「風格輸入」欄 |
+| `deai-writing-seo` | 意圖優先的 SEO 寫作與改寫，新寫或改既有稿都行 | 文章要排上搜尋、或既有稿要 SEO 化。它可以把 SEO 藍圖交給本技能生成，這時段落字數當參考帶、不強迫加失敗細節，以它的規矩為準 |
 
-典型串接：`deai-voice` 產出語氣檔，填進本技能 §0 風格輸入生成，再用 `deai-guard` 獨立複審。
-
-> 專案裡另有三個既有姊妹技能 `ai-tone-audit`（只檢查不改）、`de-ai-rewrite`（改寫）、`voice-style-distill`（提煉語氣），是本批新技能的前身。功能重疊，擇一使用即可；差異見資料夾內的 `NEW_SKILLS_COMPARISON.md`。
+典型串接：`deai-voice` 產出語氣檔，填進本技能 §0 風格輸入生成，再用 `deai-guard` 獨立複審。要排名的文章改走 `deai-writing-seo`，一樣可以帶口吻，最後用 `deai-guard` 複審。
 
 ---
 

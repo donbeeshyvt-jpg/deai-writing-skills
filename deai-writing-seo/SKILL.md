@@ -1,12 +1,12 @@
 ---
 name: deai-writing-seo
 description: >-
-  Intent-first SEO writing and rewriting for Traditional Chinese: parse what a draft or topic really wants to say, then generate or minimally rewrite it into a fluent article with SEO woven in (search intent, keyword placement by weight, titles, internal links, E-E-A-T, platform fit) while keeping the author's voice and zero AI taste. An extension pack of deai-write. Use when asked to SEO 優化, 改寫成 SEO 文章, 融入關鍵字, 寫 SEO 文, 讓文章排上搜尋, 搜尋意圖, 下標題, 內部連結, 貼文除演算法地雷, 社群貼文優化, optimize for search, SEO rewrite, keyword integration, rank an article. Content quality and author intent outrank SEO; never keyword-stuffs, never fabricates data or experience, never treats speculative algorithm rules as verified fact.
+  Intent-first SEO writing and rewriting for Traditional Chinese: parse what a draft or topic really wants to say, then generate or minimally rewrite it into a fluent article with SEO woven in (search intent, keyword placement by weight, titles, internal links, E-E-A-T, platform fit) while keeping the author's voice and zero AI taste. Works on its own for both new articles and existing drafts; for writing with no search goal use deai-write, and for an AI-taste audit without SEO use deai-guard. Use when asked to SEO 優化, 改寫成 SEO 文章, 融入關鍵字, 寫 SEO 文, 讓文章排上搜尋, 搜尋意圖, 下標題, 內部連結, 貼文除演算法地雷, 社群貼文優化, optimize for search, SEO rewrite, keyword integration, rank an article. Content quality and author intent outrank SEO; never keyword-stuffs, never fabricates data or experience, never treats speculative algorithm rules as verified fact.
 ---
 
 # 意圖優先的 SEO 寫作與改寫
 
-這是 `deai-write` 的 SEO 擴充包。deai-write 負責把文章從初稿就寫得像人，本技能負責讓同一篇文章排得上搜尋、發得動社群，而且兩件事不打架。輸入可以是主題加素材（新寫），也可以是一篇原稿（改寫）；輸出是一篇意圖清楚、關鍵字放對位置、讀起來沒有 AI 味、還保住作者原聲的成稿。
+這個技能一次顧兩件事：文章讀起來像人寫的，同時排得上搜尋、發得動社群，而且兩件事不打架。輸入可以是主題加素材（新寫），也可以是一篇原稿（改寫）；輸出是一篇意圖清楚、關鍵字放對位置、讀起來沒有 AI 味、還保住作者原聲的成稿。它自己就能從頭跑到尾，不必先裝其他技能。
 
 核心信念一句話：搜尋引擎的演算法在模仿人類讀者的偏好，所以 SEO 的本體是寫作，不是技術。文章讓人讀不下去，排第一名也沒有轉換。
 
@@ -37,7 +37,7 @@ description: >-
 | 任務型態 | 新寫 / 原稿 SEO 化 / 社群轉換 / 局部微調 | 必問，決定走第 3 關哪條路 |
 | 主題與核心關鍵字 | 一頁只鎖一個核心搜尋意圖 | 必問；沒有關鍵字就從主題推，回報推了什麼 |
 | 原稿 | 改寫型必收 | 新寫型免 |
-| 素材與分級 | 沿用 `deai-write` §0 的素材分級（[本人][官方][媒體][研究][推算][待查]） | 沒素材就走知識層，具體資訊全標 `[待補]` |
+| 素材與分級 | 每份素材標來源等級：[本人][官方][媒體][研究][推算][待查]，同一段不混級 | 沒素材就走知識層，具體資訊全標 `[待補]` |
 | 受眾與理解階段 | 誰會搜、他已經懂多少、想解決什麼 | 必問，決定白話深度 |
 | 平台 | 官網長文 / 社群貼文 / 電子報 | 判不出來就自己判並回報 |
 | 目的 | 排名 / 轉換 / 互動 / 建立權威 | 必問，決定結構與收尾 |
@@ -65,7 +65,7 @@ description: >-
 
 ### 第 3 關：寫或改
 
-**新寫**：把第 2 關的藍圖（標題、H 結構、關鍵字擺位、受眾、目的）當成輸入合約交給 `deai-write` 生成；沒有 deai-write 環境時，照它的原則自寫：防禦寫在生成當下，禁用句型一開始就不寫。
+**新寫**：照第 2 關的藍圖（標題、H 結構、關鍵字擺位、受眾、目的）直接寫。防禦寫在生成當下，`references/banned-patterns.md` 的禁用句型一開始就不寫。環境裡也裝了 `deai-write` 的話，可以把藍圖當輸入合約交給它生成；這時排版與人味照本技能的規矩走：它的段落字數數字只當參考帶、不當硬配額（見第 7 關），也不強迫加入失敗或笨拙細節（見禁止事項）。
 
 **改寫（最小干預八步）**：找出不可改變的核心意思 → 找出作者語氣與慣用節奏 → 刪重複、空泛與套版 → 修無依據的抽象評價 → 保留必要副詞、限定詞與不確定性 → 補足理解所需的主體、條件與結果 → 檢查有沒有誤加原稿沒有的立場或事實 → 只在必要位置動 SEO 與排版。除非使用者要求重寫，不把局部修正擴大成全面改寫。
 
@@ -80,7 +80,7 @@ description: >-
 
 ### 第 5 關：去 AI 味與制式語氣
 
-禁用句型以 `deai-write` 的 `references/banned-patterns.md` 為權威，本技能不重抄整表。這一關額外清的是制式 AI 語氣：重述使用者問題、宣告接下來要分析什麼、無新資訊的過場句、每節重複小結、全文末尾再改寫一次結論、邀請繼續提問的套版收尾、客服腔與過度緩衝語。句意清楚就直接銜接，不機械掛連接詞；資料足以支持結論就直接下判斷，不每件事都補正反兩面。
+禁用句型清單在 `references/banned-patterns.md`，本技能自帶，不依賴其他技能。這一關另外清的是制式 AI 語氣：重述使用者問題、宣告接下來要分析什麼、無新資訊的過場句、每節重複小結、全文末尾再改寫一次結論、邀請繼續提問的套版收尾、客服腔與過度緩衝語。句意清楚就直接銜接，不機械掛連接詞；資料足以支持結論就直接下判斷，不每件事都補正反兩面。
 
 ### 第 6 關：E-E-A-T 與可信度
 
@@ -149,7 +149,7 @@ description: >-
 
 ## 與其他技能搭配
 
-- 跟 `deai-write` 搭：本技能出 SEO 藍圖與規格，deai-write 負責生成端；把藍圖填進它 §0 的輸入合約即可。它的 `references/banned-patterns.md` 是本技能第 5 關的禁用權威。
+- 跟 `deai-write` 分工：沒有搜尋目標的一般寫作用 `deai-write`；要排上搜尋、或要把既有稿子 SEO 化，用本技能。兩個都裝時，本技能可以把藍圖交給 deai-write 生成，交棒規矩見第 3 關。
 - 跟 `deai-guard` 搭：成稿後用 deai-guard 做獨立複審，確認 SEO 化沒有引入 AI 味。
 - 跟 `deai-voice` 搭：要帶特定口吻的 SEO 文，把 deai-voice 的口吻資料包生成 prompt 填進第 3 關的生成輸入，口吻與 SEO 規格並行不衝突。
 
@@ -161,3 +161,4 @@ description: >-
 | `references/seo-mechanics.md` | 關鍵字權重表、標題技術、內部連結、長尾、70/30 做報告、內容物理學、E-E-A-T、內容鮮度、主題中心、黑帽禁區 |
 | `references/modifier-function-rules.md` | 修飾詞功能判斷表、四問測試、有意識省略、具體化原則、防呆三條、人味真實性規則 |
 | `references/platform-and-checklist.md` | 平台與排版適配、社群演算法檢核（推測性聲明）、產出前五組檢查表 |
+| `references/banned-patterns.md` | 禁用句型三層（永遠不寫／聚集才算／密度過高）、標點硬規則、SEO 與技術文的誤判放行 |

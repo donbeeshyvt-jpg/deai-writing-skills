@@ -1,94 +1,159 @@
 # deai-writing-skills
 
-Traditional Chinese writing skills for any AI that takes a system prompt, Claude Code included. Three core skills: generate copy without the AI smell, check existing text for it, and distill someone's voice to write in. Plus a SEO extension that gets the same finished draft to rank on search and move on social.
+Four Traditional Chinese writing skills that take the AI smell out of AI-written text, and can give it your own voice.
 
 **English** | [繁體中文](README.md)
 
+> The Chinese README is the main page. It was written with the skills in this repo, in a casual Taiwanese "chatty tutorial" voice; this page is its English translation.
+
 ---
 
-## What this is
+Can you spot an AI-written article at a glance? It opens with "in today's fast-paced era," it's packed with "it's worth noting that," and it closes by turning everything into a life lesson (you probably wanted to close the tab by now). deai-writing-skills is four Traditional Chinese writing skills built for exactly that problem.
 
-Three self-contained core skills for three writing jobs in Chinese: generate from scratch, check existing text, and distill a person's voice. A fourth, `deai-writing-seo`, extends `deai-write` into search and social. Each skill is a single `SKILL.md` (plain text) plus a `references/` folder of detail tables.
+Each one has a clear job: write from scratch, check a draft you already have, capture someone's voice, or write and rewrite articles that need to rank in search. Every skill is a single `SKILL.md` (the skill's instruction file, plain text) plus a `references/` folder of detail tables.
 
-No platform lock-in. Every `SKILL.md` carries a paste-ready operating prompt, so it runs in any AI that takes a system prompt. If you use Claude Code, you can drop the folders into a skills directory and they auto-load as slash commands, but that is just one option, not a requirement.
+No platform lock-in. Every `SKILL.md` includes an operating prompt (the opening instructions for an AI) that you can paste whole into any chat AI. This page walks you through what each skill does, how to install them, how to chain them, and what our trigger tests found.
 
-This README was written with `deai-write`. If the tool works, its own front page should not read like a machine wrote it.
+---
 
-## The three core skills
+## The four skills
 
-| Skill | What it does | When to use it |
+| Skill | What it does for you | When to reach for it |
 |---|---|---|
-| `deai-write` | Generates a finished Traditional Chinese draft from a topic plus source material. Blog posts, social copy, docs, emails, landing pages, or scripts. The banned patterns never get written in the first place. | You have a topic and material and want new copy that reads human from draft one. |
-| `deai-guard` | Audits existing Traditional Chinese text for the AI smell. Produces an evidence report (risk score, five dimensions, per-hit findings), then stops and asks which hits to fix before touching a word. | You have text already written and want it checked, or checked and then rewritten. |
-| `deai-voice` | Reverse-analyzes how one person speaks or writes and packs it into a portable voice pack: the full analysis data, a detailed generation prompt, and a built-in de-AI-taste guard, ready to paste into any AI to write in that voice or hand off as a character card. | You want generated text to sound like a specific person, not generic-natural. |
+| `deai-write` | Give it a topic and material and it writes a finished Traditional Chinese draft: blog posts, social posts, docs, emails, landing pages, scripts. Banned patterns never get written in the first place, so there's nothing to scrub afterwards. | You have a topic and material and want new copy that reads human from the first draft. |
+| `deai-guard` | Audits text you already have and gives you an evidence-based report (risk score, five dimensions, per-hit findings), then stops and asks which hits to fix. Nothing changes until you say so. | The draft exists and you want it checked, or checked and then fixed. |
+| `deai-voice` | Reverse-engineers how a specific person talks and writes, and packs it into a three-file "character card." Paste the first file into any AI and it writes in that voice. | You want AI output that sounds like a particular person, and generic "natural" prose won't do. |
+| `deai-writing-seo` | Writes new articles or rewrites existing ones so they rank in search and travel on social. It first confirms what you actually want to say, places keywords by weight, and on rewrites touches only what needs touching so your voice survives. | The article has to climb search results, needs keywords worked in, or a social post is getting no reach. |
 
-## SEO extension: deai-writing-seo
+All four work on their own, and you can chain them too (see below).
 
-| Skill | What it does | When to use it |
-|---|---|---|
-| `deai-writing-seo` | The SEO extension pack for `deai-write`. Takes a topic plus material (new draft) or an existing draft (rewrite) and outputs an article with clear intent, keywords placed by weight, no AI smell, and the author's own voice intact. Search intent, keyword placement, titles, internal links, E-E-A-T, and platform fit are handled together. | You want an article to rank on search and travel on social without turning it into keyword-stuffed AI copy. |
-
-Core belief: search algorithms imitate what human readers prefer, so SEO is a writing job, not a technical one. A first-place article nobody can finish reading still converts nobody. It runs a seven-layer priority order where SEO always sits below factual accuracy and author intent.
+---
 
 ## Four shared ground rules
 
-Every skill holds the same four lines.
+Every skill holds these four lines, no exceptions:
 
-1. **No identity verdict.** The skills report "this passage shows N AI-smell features." They never say "a machine definitely wrote this" and never hand you a generation-probability percentage.
+1. No identity verdicts. The skills say "these passages show N AI-smell features." They never say "a machine definitely wrote this," and never hand you a generation-probability percentage.
+2. Blank beats fake. No invented facts, numbers, or first-hand experience. Gaps get marked `[待補]` (to fill) or `[待查]` (to check).
+3. Detection misfires, so it downgrades. Short text, technical docs, official notices, academic abstracts, non-native Chinese, and SEO copy are judged more leniently, not hard-judged.
+4. Protected spans stay put. Numbers, terminology, quotes, commands, and proper nouns are never touched during a rewrite; only the wording changes.
 
-2. **Honest boundaries.** No invented facts, numbers, or first-hand experience. Anything that cannot be verified gets marked `[待補]` (to fill) or `[待查]` (to check), left blank rather than faked.
+---
 
-3. **Detection misfires, so it downgrades.** Short text, technical docs, official notices, academic abstracts, non-native Chinese, and SEO copy are handled at a lower strictness, not hard-judged.
+## Installing: three ways
 
-4. **Protected spans stay put.** Numbers, terminology, quotes, commands, and proper nouns are never touched during a rewrite. Rewriting means saying it differently, not changing what it says.
+### Option 1: paste the prompt (works in any AI)
 
-## How to use it
+No install at all, and the fastest way in:
 
-Paste it into any AI. Open any `SKILL.md`, copy the operating prompt inside it, and paste that into ChatGPT, Claude, Gemini, or whatever chat AI you use. It follows the same steps. No install, no platform lock-in.
+1. Open any `SKILL.md` and find the paste-ready operating prompt section (可直接貼的操作 prompt).
+2. Copy it whole into ChatGPT, Claude, Gemini, or whichever chat AI you use.
+3. Hand it your topic, draft, or samples, and it follows the same steps.
 
-Claude Code makes it smoother. Drop the four folders into a skills directory (global `~/.claude/skills/`, or a project's `.claude/skills/`), restart, and they become `/deai-guard`, `/deai-voice`, `/deai-write`, and `/deai-writing-seo`, triggered automatically by their keywords.
+Quick tip: `deai-voice` normally produces three files. In a chat that can't create files, it gives you the three parts in the conversation instead; just save them yourself.
 
-To get the files, clone this repo:
+### Option 2: install into Claude Code (it starts on its own when you mention a trigger)
+
+Claude Code reads skills from its skills folder automatically. Once they're installed, a trigger phrase (like "check this for AI smell") starts the matching skill on its own, or you can call one with a slash command such as `/deai-guard`.
+
+Step 1, clone the repo anywhere:
 
 ```
 git clone https://github.com/donbeeshyvt-jpg/deai-writing-skills.git
 ```
 
-No build step, no dependencies.
+Step 2, copy the four skill folders into the skills folder.
 
-## Minimal usage
+macOS / Linux:
 
-### deai-write
+```
+mkdir -p ~/.claude/skills && cp -r deai-writing-skills/deai-* ~/.claude/skills/
+```
 
-Trigger words are 寫一篇貼文, 生成文章, or "draft this without AI taste." It asks for five things before writing: topic, material (and whether each piece is yours, official, or unverified), scene, target reader, and what you want the reader to do. It outputs a build plan first, you confirm, then it writes the full draft with an 11-point plus 5-dimension self-check already run. Gaps come back marked `[待補]` / `[待查]`, never filled with invented numbers.
+Windows (PowerShell):
 
-### deai-guard
+```
+New-Item -ItemType Directory -Force "$HOME\.claude\skills" | Out-Null
+Copy-Item -Recurse deai-writing-skills\deai-* "$HOME\.claude\skills\"
+```
 
-Type 檢查 AI 味, 去 AI 味, or "check if this reads like AI" and it starts. First it asks one question: report only, or check-then-fix. Then it audits and hands you a report with a risk score, five dimension scores, and each hit shown with its original sentence, the problem, why it reads like AI, a suggested fix, and where it might be a false positive. Then it stops at a hard gate and asks which hits to fix. Nothing changes until you choose. After the rewrite you get a before/after diff and a residual re-check.
+To use them in a single project only, put them in that project's `.claude/skills/` instead.
 
-### deai-voice
+Step 3, check that it looks like this:
 
-Say 提煉語氣, 蒸餾說話方式, or "distill this person's voice" to run it. It runs an authorization gate first: only your own writing, content you are authorized to act for, or a named public figure's public material. A trait has to repeat across three or more samples to reach the core layer, and every trait carries a confidence level. You get a portable voice pack: the full reverse-analysis data, a detailed generation prompt (with a built-in de-AI-taste guard and anti-caricature frequency caps), and a character-card view, all in one block you can paste into any AI. The human-readable profile is kept as the review source.
+```
+~/.claude/skills/
+├── deai-write/SKILL.md
+├── deai-guard/SKILL.md
+├── deai-voice/SKILL.md
+└── deai-writing-seo/SKILL.md
+```
 
-### deai-writing-seo
+⚠️ Important: don't clone the whole repo straight into the skills folder. With the extra level, `~/.claude/skills/deai-writing-skills/deai-write/SKILL.md`, Claude Code finds none of the skills (we tested it: all four disappear).
 
-Say SEO 優化, 改寫成 SEO 文章, 融入關鍵字, or "get this to rank" and it runs. It first asks the task type (new draft, SEO rewrite, social conversion, or light touch-up), the topic and core keyword, material, audience, platform, and goal, asking for whatever is missing. On a rewrite it reads the whole draft first, reports back its guess at the core purpose and intended effect for you to confirm (a wrong guess re-evaluates everything), and locks a do-not-touch list (numbers, steps, stance, idioms). It reads search intent by looking at what actually ranks on page one, not by guessing. Before writing it hands you a SEO blueprint with keywords placed by weight, one core intent per page. Algorithm rules are always flagged as speculative, never stated as verified fact.
+New skills usually show up without a restart; if they don't, restart Claude Code once.
+
+### Option 3: install into Codex
+
+Codex (OpenAI's coding agent) uses the same skill format. Per the [official Codex docs](https://developers.openai.com/codex/skills), the personal skills folder is `~/.agents/skills/`; copy the four folders in there. The `agents/openai.yaml` file in each skill holds the name and description Codex shows in its interface. (For Codex we've only checked the official docs, not tested it on a real machine.)
+
+---
+
+## Using each skill
+
+### deai-write: write from scratch
+
+Phrases like 寫一篇貼文 (write a post), 生成文章 (generate an article), or "write it without the AI smell" start it. Before writing, it asks five things: topic, material (and whether each piece is yours, official, or unverified), scene, target reader, and what you want the reader to do afterwards. It gives you a build plan first and writes the full draft once you confirm; an 11-point check and a 5-dimension self-review have already run by the time you get it.
+
+### deai-guard: check first, fix only when you say so
+
+Type 檢查 AI 味 (check for AI smell), 去 AI 味 (remove the AI smell), or "does this read like AI?" and it starts. First it asks: report only, or check and then fix? Every hit in the report lists the original sentence, the problem, why it reads like AI, a suggested fix, and when it might be a false positive. Then it stops and waits for you to pick which hits to fix (without your choice, not a single word changes). After the rewrite you get a before/after comparison plus a residual check.
+
+### deai-voice: pack a voice into a character card
+
+To capture someone's voice, say 提煉語氣 (distill a voice), 蒸餾說話方式 (distill how someone talks), or "capture how this person writes." It runs an authorization gate first: only your own writing, content you're authorized to act for, or a named public figure's public material. A trait has to show up in three or more samples to count.
+
+You end up with a character-card folder. Paste the first file, `1-說話格式.md` (speaking format), into any AI and it writes in that voice. The second, `2-資料庫.md` (database), is the full voice analysis with an original example for every item. The third, `3-來源索引.md` (source index), records where each sample came from and when it was collected; it's for people only and never gets fed to the AI.
+
+### deai-writing-seo: write articles that rank
+
+When an article needs to climb the rankings, give it SEO 優化 (optimize for SEO), 改寫成 SEO 文章 (rewrite as an SEO article), 融入關鍵字 (work in keywords), or 幫我下標題 (write me a title). Before starting, it asks for the task type (new article, SEO rewrite of an old draft, social adaptation, or light touch-up), core keyword, audience, platform, and goal.
+
+On a rewrite, it first reports its guess at what the piece is trying to say and achieve, and asks you to confirm; a wrong guess means everything gets re-evaluated. Numbers, steps, stance, and pet phrases are locked before anything changes. It reads search intent by looking at what actually ranks on page one for the keyword (no guessing), places keywords by weight, and keeps each page to one core intent. Algorithm rules are treated as direction, never stated as fact.
+
+---
 
 ## How they chain
 
-The four are built to hand off to each other.
+They're built to hand off to each other:
 
 ```
-deai-voice  →  deai-write  →  deai-guard
- 抽語氣          填進 §0        獨立複審
-                風格輸入
+deai-voice  →  deai-write        →  deai-guard
+ capture         write with the     independent
+ the voice       style input        second read
+
+deai-voice  →  deai-writing-seo  →  deai-guard
+ capture         write articles     independent
+ the voice       that need to rank  second read
 ```
 
-Distill a voice with `deai-voice`, drop its short prompt into the `風格輸入` (style input) field of `deai-write` §0, generate, then run `deai-guard` for an independent second read. The voice short prompt also feeds `deai-guard` directly: it turns "rewrite this to read more natural" into "rewrite this to sound more like that person."
+In short: turn a voice into a character card with `deai-voice`, then paste its first file into the style input (風格輸入) field of `deai-write`; articles that need to rank go to `deai-writing-seo` instead. When the draft is done, run it past `deai-guard`, an independent second pair of eyes.
 
-When you need SEO, `deai-writing-seo` plugs onto `deai-write`: it produces the SEO blueprint and spec, you drop that into `deai-write` §0 to generate, then run `deai-guard` to confirm the SEO pass introduced no AI smell. To carry a specific voice, feed the `deai-voice` pack into the same generation step; voice and SEO spec run together without conflict.
+Each skill works fine on its own; chaining is just one more option.
 
-Each skill stands alone. The chain is optional.
+---
+
+## Trigger test results
+
+In September 2026, on Claude Code 2.1.281 with Opus 5.5 and only these four skills installed, we tested triggering with 33 realistic requests, 2 runs each, 66 runs total.
+
+- The 25 requests that should trigger a skill: all 50 runs picked the right one. Four of them were mixed requests where two skills could fit (like "remove the AI smell and work in a keyword," or "write an SEO article in my voice"), and those also went to the more specialized skill.
+- 8 decoys (translation, typo-only fixes, judging whether an image is AI-made, technical SEO settings, and so on): 16 runs, 0 false triggers.
+- One exception to watch for: for a "just polish this" on a few short lines, the AI sometimes decides to edit directly without calling `deai-guard` (more often in setups with many skills installed). For the full flow, type `/deai-guard`.
+
+(Tested on one machine with one model; results may differ on other models or versions.)
+
+---
 
 ## Repo structure
 
@@ -97,35 +162,34 @@ deai-writing-skills/
 ├── README.md
 ├── README.en.md
 ├── LICENSE
-├── deai-guard/
-│   ├── SKILL.md
-│   ├── agents/openai.yaml
-│   └── references/
-├── deai-voice/
-│   ├── SKILL.md
-│   ├── agents/openai.yaml
-│   └── references/
 ├── deai-write/
-│   ├── SKILL.md
-│   ├── agents/openai.yaml
-│   └── references/
-└── deai-writing-seo/
-    ├── SKILL.md
-    ├── agents/openai.yaml
-    └── references/
+│   ├── SKILL.md            ← entry point; read it and you can start
+│   ├── agents/openai.yaml  ← display settings for the Codex interface
+│   └── references/         ← detail tables, loaded only when needed
+├── deai-guard/             (same layout)
+├── deai-voice/             (same layout)
+└── deai-writing-seo/       (same layout)
 ```
 
-Each `SKILL.md` is the single entry point. Read it and you can start; load the `references/` tables only when you need the detail.
+---
 
-## Limits and known gaps
+## Limits and known behavior
 
-- Detection is not proof. A low risk score does not certify text as human-written, and a high one does not prove a machine wrote it. The skills rank features, they do not judge authorship.
+- Detection is not proof. A low risk score doesn't certify human writing, and a high one doesn't prove a machine wrote it. The skills rank features; they don't judge authorship.
+- Traditional Chinese first. The rules are tuned for Traditional Chinese and mixed Chinese-English text; other languages are out of scope.
+- Algorithm rules are mostly speculative. The social and search algorithm rules `deai-writing-seo` works with have no complete official documentation, so the skill treats them as direction only.
+- Short "polish this" requests don't always trigger `deai-guard` (see the test results); type `/deai-guard` for the full flow.
+- Skill upload to claude.ai (the web app) hasn't been tested yet; to use the skills there, pasting the prompt (Option 1) is the safest bet.
 
-- Traditional Chinese first. The rules are tuned for Traditional Chinese and mixed Chinese-English text. Other languages are out of scope.
+---
 
-- **Algorithm rules are mostly speculative.** The social and search algorithm rules `deai-writing-seo` relies on have no complete official documentation, so the skill flags them all as speculative reference, never as verified fact. Whether rankings move comes down to content quality in the end.
+## How this README was written
 
-- **Predecessor skills not in this repo.** Several `SKILL.md` files mention earlier sibling skills (`ai-tone-audit`, `de-ai-rewrite`, `voice-style-distill`) and a `NEW_SKILLS_COMPARISON.md`. Those files are not included here. If you see them referenced inside a `SKILL.md`, that is pointing at the predecessors, which live outside this repo.
+The Chinese README was written with this repo's own skills. `deai-voice` distilled a "chatty web tutorial" (網文聊天體) character card from 39 public Taiwanese tutorial and pop-science articles (a genre voice, not any particular author). `deai-write` wrote the page with that card as its style input, and `deai-guard` gave it an audit pass. This English page is a translation.
+
+So if you hit a passage that reads like AI, that's on the skills (open an issue and call it out). Once they're installed, grab something you wrote recently and hand it to `deai-guard`.
+
+---
 
 ## License
 

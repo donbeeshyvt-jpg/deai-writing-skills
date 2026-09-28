@@ -1,7 +1,7 @@
 ---
 name: deai-guard
 description: >-
-  Interactive de-AI check-and-rewrite for Traditional Chinese (and mixed-language) text, with a hard confirmation gate. First audit strictly and produce an evidence-based report (AI-taste risk score plus five dimensions plus per-hit findings), then STOP and ask the user which hits to fix, and only after confirmation remove or rewrite, with a before/after diff and a residual re-audit. Use when asked to 檢查 AI 味, 去 AI 味, 去味, 潤稿, humanize, de-slop, remove AI flavor, detect AI writing, or 幫我看這篇像不像 AI 寫的 — especially when the user says 不要直接改、先給我看. Traditional Chinese first; short text, technical docs, official notices, academic abstracts, and SEO copy are downgraded, not hard-judged.
+  Interactive de-AI check-and-rewrite for Traditional Chinese (and mixed-language) text, with a hard confirmation gate. First audit strictly and produce an evidence-based report (AI-taste risk score plus five dimensions plus per-hit findings), then STOP and ask the user which hits to fix, and only after confirmation remove or rewrite, with a before/after diff and a residual re-audit. Use when asked to 檢查 AI 味, 去 AI 味, 去味, 潤稿, humanize, de-slop, remove AI flavor, detect AI writing, or 幫我看這篇像不像 AI 寫的 — especially when the user says 不要直接改、先給我看. Traditional Chinese first; short text, technical docs, official notices, academic abstracts, and SEO copy are downgraded, not hard-judged. When the rewrite is meant to improve search ranking, use deai-writing-seo instead.
 ---
 
 # 去 AI 味：檢查、確認、才改寫
@@ -284,8 +284,8 @@ AI 味風險分數：<0-100>　風險等級：<低／中／高>
 
 - **要從零寫**：要從主題和素材直接寫出沒有 AI 味的新文章，用 `deai-write`，不是這個。這個技能處理已經寫好的文本。
 - **要套某人口吻**：如果使用者要的是「改成某人的說話方式」而不只是「去掉 AI 味」，先用 `deai-voice` 產出 voice profile。若改寫時附上 profile，本技能的改寫目標就從「改得更通用自然」切換成「改得更貼近該 profile」，其餘流程與閘門不變。
-- 三個技能共用同一套誠實邊界：不編造事實數字第一手經驗，查不到標 [待補]／[待查]；偵測器會誤判，不當唯一判決；短文、技術文、公文、學術摘要、非母語、SEO 文降級。
-- 專案另有既有前身技能 `ai-tone-audit`（只檢查）與 `de-ai-rewrite`（只改寫）。本技能把兩者合一並加確認閘門；差異見資料夾內 `NEW_SKILLS_COMPARISON.md`。
+- **要 SEO 化**：既有文章要排上搜尋、要放關鍵字，用 `deai-writing-seo`，它改寫時也會清 AI 味；成稿可以再回來用本技能複審。
+- 四個技能共用同一套誠實邊界：不編造事實數字第一手經驗，查不到標 [待補]／[待查]；偵測器會誤判，不當唯一判決；短文、技術文、公文、學術摘要、非母語、SEO 文降級。
 
 ## references 索引
 
